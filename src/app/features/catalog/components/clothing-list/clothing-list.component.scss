@@ -208,6 +208,8 @@
   
   &:hover {
     box-shadow: 0 15px 40px rgba(20, 49, 53, 0.2);
+    border-color: var(--color-light);
+    transform: translateY(-8px);
     
     @media (max-width: 768px) {
       box-shadow: 0 12px 30px rgba(20, 49, 53, 0.15);
@@ -216,8 +218,6 @@
     @media (max-width: 480px) {
       box-shadow: 0 8px 20px rgba(20, 49, 53, 0.12);
     }
-    border-color: var(--color-light);
-    transform: translateY(-8px);
   }
   
   .selected & {
