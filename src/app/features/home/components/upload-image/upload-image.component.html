@@ -1,0 +1,45 @@
+<div class="upload-container">
+  <h2>Comece sua experiência</h2>
+  <p class="subtitle">Tire uma foto ou faça upload de uma imagem sua</p>
+
+  <div class="upload-area" 
+       [class.dragging]="isDragging"
+       [class.has-image]="imagePreview"
+       (dragover)="onDragOver($event)"
+       (dragleave)="onDragLeave($event)"
+       (drop)="onDrop($event)">
+    
+    <div class="upload-zone" *ngIf="!imagePreview">
+      <div class="upload-icon">📤</div>
+      <h3>Arraste e solte uma imagem aqui</h3>
+      <p>ou</p>
+      <label for="file-input" class="upload-button">
+        Escolher arquivo
+        <input id="file-input" type="file" accept="image/*" (change)="onFileSelected($event)">
+      </label>
+      <p class="upload-hint">Formatos aceitos: JPG, PNG, GIF (máx. 10MB)</p>
+    </div>
+
+    <div class="image-preview" *ngIf="imagePreview">
+      <img [src]="imagePreview" alt="Sua imagem">
+      <div class="image-actions">
+        <button class="btn btn-secondary" (click)="removeImage()">
+          🗑️ Remover
+        </button>
+        <button class="btn btn-primary" (click)="proceedToFittingRoom()">
+          ✨ Ir para o Provador
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="instructions" *ngIf="!imagePreview">
+    <h3>💡 Dicas para melhores resultados:</h3>
+    <ul>
+      <li>Use uma foto de corpo inteiro</li>
+      <li>Prefira fundos claros e neutros</li>
+      <li>Mantenha boa iluminação</li>
+      <li>Fique em pé, de frente para a câmera</li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+<div class="fitting-room-container">
+  <!-- Cabeçalho -->
+  <div class="header-section">
+    <h1>Provador Virtual</h1>
+    <p>Experimente roupas virtualmente!</p>
+  </div>
+
+  <!-- Mensagem se não houver imagem -->
+  <div class="no-image-message" *ngIf="!userImage">
+    <div class="message-box">
+      <h2>🖼️ Nenhuma imagem encontrada</h2>
+      <p>Você precisa fazer upload de uma imagem primeiro para usar o provador virtual.</p>
+      <a routerLink="/" class="btn btn-primary">Voltar ao Início</a>
+    </div>
+  </div>
+
+  <!-- Área principal do provador -->
+  <div class="fitting-area" *ngIf="userImage">
+    <div class="fitting-grid">
+      <!-- Visualização principal -->
+      <div class="tryon-container">
+        <h2>Seu Look</h2>
+        <div class="image-container" 
+             (mousemove)="onMouseMove($event)" 
+             (mouseup)="onMouseUp()" 
+             (mouseleave)="onMouseUp()"
+             (click)="onContainerClick($event)">
+          <!-- Loading -->
+          <div class="loading" *ngIf="isLoading">
+            <div class="spinner"></div>
+            <p>Aplicando roupa...</p>
+          </div>
+          
+          <!-- Imagem do usuário -->
+          <img [src]="userImage" alt="Sua imagem" class="user-image" [class.loading]="isLoading">
+          
+          <!-- Múltiplas roupas sobrepostas -->
+          <div *ngFor="let clothingItem of selectedClothes" class="clothing-layer">
+            <img [src]="clothingItem.image" 
+                 [alt]="clothingItem.name" 
+                 class="clothing-overlay"
+                 [class.selected]="currentItem === clothingItem.image"
+                 [style]="getClothingStyle(clothingItem.image)"
+                 (mousedown)="onMouseDown($event, clothingItem.image)"
+                 (click)="onClothingClick($event, clothingItem.image)"
+                 (error)="onImageError(clothingItem.image)"
+                 [title]="clothingItem.name + ' - Clique para selecionar, arraste para mover'">
+          </div>
+        </div>
+        
+        <!-- Controles -->
+        <div class="controls" *ngIf="selectedClothes.length > 0 && !isLoading">
+          <!-- Seletor de Item -->
+          <div class="item-selector" *ngIf="selectedClothes.length > 1">
+            <h4>🎯 Item Selecionado</h4>
+            <div class="item-buttons">
+              <button *ngFor="let item of selectedClothes" 
+                      class="btn-item"
+                      [class.active]="currentItem === item.image"
+                      (click)="selectItem(item.image)">
+                {{ item.name }}
+              </button>
+            </div>
+          </div>
+          
+          <!-- Controles de Zoom -->
+          <div class="zoom-controls" *ngIf="currentItem">
+            <h4>🔍 Tamanho</h4>
+            <div class="zoom-buttons">
+              <button class="btn btn-zoom" (click)="zoomOut()" title="Diminuir">➖</button>
+              <span class="zoom-display">{{ (currentScale * 100).toFixed(0) }}%</span>
+              <button class="btn btn-zoom" (click)="zoomIn()" title="Aumentar">➕</button>
+              <button class="btn btn-reset" (click)="resetZoom()" title="Resetar">🔄</button>
+            </div>
+          </div>
+          
+          <!-- Controles de Ação -->
+          <div class="action-controls">
+            <h4>⚙️ Ações</h4>
+            <div class="action-buttons">
+              <button class="btn btn-cart" 
+                      *ngIf="currentItem" 
+                      (click)="addCurrentItemToCart()"
+                      [disabled]="isCurrentItemInCart()">
+                {{ isCurrentItemInCart() ? '✓ No Carrinho' : '🛒 Adicionar ao Carrinho' }}
+              </button>
+              <button class="btn btn-secondary" 
+                      *ngIf="currentItem" 
+                      (click)="removeClothing(currentItem)">
+                🗑️ Remover Item Selecionado
+              </button>
+              <button class="btn btn-secondary" 
+                      *ngIf="selectedClothes.length > 0" 
+                      (click)="removeAllClothing()">
+                🗑️ Remover Todas
+              </button>
+              <button class="btn btn-success" (click)="saveOutfit()">
+                💾 Salvar Look
+              </button>
+              <button class="btn btn-whatsapp" 
+                      *ngIf="selectedClothes.length > 0"
+                      (click)="buyOnWhatsApp()">
+                📱 Comprar no WhatsApp
+              </button>
+            </div>
+          </div>
+          
+          <!-- Dica de Uso -->
+          <div class="usage-tip">
+            <p>💡 <strong>Dica:</strong> Clique em uma roupa para selecioná-la, depois arraste para mover. Use os botões + e - para ajustar o tamanho.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Catálogo de roupas -->
+      <div class="catalog-section">
+        <app-clothing-list (clothingSelected)="onClothingSelected($event)"></app-clothing-list>
+      </div>
+    </div>
+  </div>
+</div>

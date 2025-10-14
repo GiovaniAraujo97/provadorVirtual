@@ -1,0 +1,110 @@
+.hero {
+  background: linear-gradient(135deg, #143135 0%, #BD6A42 50%, #B79973 100%);
+  color: #FDEFD4;
+  padding: 5rem 0;
+  text-align: center;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23FDEFD4" fill-opacity="0.05"><circle cx="30" cy="30" r="4"/></g></svg>');
+    pointer-events: none;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      font-family: var(--font-body);
+      color: rgba(255, 255, 255, 0.759);
+      text-shadow: 2px 2px 4px rgba(20, 49, 53, 0.3);
+      letter-spacing: -1px;
+      
+      @media (max-width: 768px) {
+        font-size: 2.5rem;
+      }
+    }
+    
+    .subtitle {
+      font-size: 1.4rem;
+      margin-bottom: 3rem;
+      color: #D1BBA3;
+      font-weight: 300;
+      font-family: var(--font-body);
+      font-style: italic;
+      
+      @media (max-width: 768px) {
+        font-size: 1.2rem;
+      }
+    }
+  }
+  
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    
+    .feature {
+      background: rgba(253, 239, 212, 0.15);
+      padding: 2.5rem;
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(209, 187, 163, 0.3);
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+        background: rgba(253, 239, 212, 0.25);
+        box-shadow: 0 10px 30px rgba(20, 49, 53, 0.2);
+      }
+      
+      .feature-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        filter: drop-shadow(2px 2px 4px rgba(20, 49, 53, 0.3));
+      }
+      
+      h3 {
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+        color: #FDEFD4;
+        font-weight: 600;
+        font-family: var(--font-heading);
+      }
+      
+      p {
+        color: #D1BBA3;
+        line-height: 1.6;
+        font-size: 1rem;
+        font-family: var(--font-body);
+      }
+    }
+  }
+}
+
+.upload-section {
+  padding: 4rem 0;
+  background: #f8f9fa;
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+}

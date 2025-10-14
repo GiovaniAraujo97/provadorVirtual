@@ -1,0 +1,48 @@
+<div class="clothing-catalog">
+  <h2>Catálogo de Roupas</h2>
+  <p class="subtitle">Clique nas roupas para experimentar múltiplas peças</p>
+  
+  <!-- Contador de seleções e botão limpar -->
+  <div class="selection-controls" *ngIf="getSelectedCount() > 0">
+    <div class="selection-info">
+      <span class="selected-count">{{ getSelectedCount() }} peça(s) selecionada(s)</span>
+      <button class="btn-clear" (click)="clearSelections()">Limpar Seleções</button>
+    </div>
+  </div>
+  
+  <div class="clothing-grid">
+    <div *ngFor="let item of clothes" 
+         class="clothing-item" 
+         [class.selected]="item.selected"
+         (click)="onClothingClick(item)">
+      <div class="clothing-card">
+        <div class="selection-indicator" *ngIf="item.selected">
+          <span class="check-icon">✓</span>
+        </div>
+        <img [src]="item.image" [alt]="item.name" class="clothing-image">
+        <div class="clothing-info">
+          <h3>{{ item.name }}</h3>
+          <span class="category">{{ item.category }}</span>
+          <div class="price-section">
+            <span class="price">{{ formatPrice(item.price) }}</span>
+          </div>
+          <div class="clothing-actions">
+            <button 
+              class="btn btn-cart" 
+              [class.in-cart]="isInCart(item)"
+              (click)="addToCart(item, $event)"
+              [disabled]="isInCart(item)">
+              {{ isInCart(item) ? '✓ No Carrinho' : '🛒 Adicionar' }}
+            </button>
+            <button 
+              class="btn btn-whatsapp-small" 
+              (click)="buyItemOnWhatsApp(item, $event)"
+              title="Comprar direto no WhatsApp">
+              📱 Comprar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

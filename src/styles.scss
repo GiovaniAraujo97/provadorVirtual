@@ -1,1 +1,236 @@
 /* You can add global styles to this file, and also import other style files */
+
+// Importando fontes do Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+// Definindo variáveis do tema Style Vision
+:root {
+  --color-primary: #143135;
+  --color-secondary: #BD6A42;
+  --color-accent: #B79973;
+  --color-light: #D1BBA3;
+  --color-lightest: #FDEFD4;
+  
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+// Estilos globais
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  
+  // Mobile first - ajustar tamanho base da fonte
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 13px;
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--color-primary);
+  background-color: var(--color-lightest);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  // Prevenir zoom horizontal em mobile
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
+  
+  // Melhorar performance de toque em mobile
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-primary);
+}
+
+h1 {
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  font-weight: 700;
+  
+  @media (max-width: 480px) {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+}
+
+h2 {
+  font-size: clamp(1.3rem, 4vw, 2.5rem);
+  font-weight: 600;
+  
+  @media (max-width: 480px) {
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
+  }
+}
+
+h3 {
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
+  font-weight: 600;
+  
+  @media (max-width: 480px) {
+    font-size: clamp(1rem, 4vw, 1.4rem);
+  }
+}
+
+h4 {
+  font-size: clamp(0.9rem, 2.5vw, 1.4rem);
+  font-weight: 600;
+  font-family: var(--font-heading);
+  
+  @media (max-width: 480px) {
+    font-size: clamp(0.8rem, 3vw, 1.1rem);
+  }
+}
+
+h5 {
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
+  font-weight: 500;
+  font-family: var(--font-heading);
+  
+  @media (max-width: 480px) {
+    font-size: clamp(0.7rem, 2.5vw, 1rem);
+  }
+}
+
+h6 {
+  font-size: clamp(0.7rem, 1.5vw, 1rem);
+  font-weight: 500;
+  font-family: var(--font-heading);
+  
+  @media (max-width: 480px) {
+    font-size: clamp(0.65rem, 2vw, 0.9rem);
+  }
+}
+
+p, span, div, label, button {
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
+strong, b {
+  font-weight: 600;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+a {
+  color: var(--color-secondary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+// Scrollbar personalizada
+::-webkit-scrollbar {
+  width: 8px;
+  
+  @media (max-width: 768px) {
+    width: 4px;
+  }
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-lightest);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+// Classes utilitárias para responsividade
+.mobile-only {
+  display: none !important;
+  
+  @media (max-width: 768px) {
+    display: block !important;
+  }
+}
+
+.desktop-only {
+  display: block !important;
+  
+  @media (max-width: 768px) {
+    display: none !important;
+  }
+}
+
+.container-mobile {
+  padding: 0.5rem;
+  
+  @media (min-width: 768px) {
+    padding: 1rem;
+  }
+  
+  @media (min-width: 1024px) {
+    padding: 1.5rem;
+  }
+}
+
+// Botões responsivos
+.btn {
+  font-family: var(--font-body);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  touch-action: manipulation;
+  
+  @media (max-width: 768px) {
+    min-height: 44px; // Mínimo recomendado para toque
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 480px) {
+    min-height: 48px; // Ainda maior para celulares pequenos
+    padding: 0.8rem 1.2rem;
+    font-size: 0.85rem;
+  }
+}
+
+// Grid responsivo
+.grid-responsive {
+  display: grid;
+  gap: 1rem;
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  @media (min-width: 481px) and (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  
+  @media (min-width: 769px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
