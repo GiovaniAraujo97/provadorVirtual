@@ -1,0 +1,21 @@
+include:
+  - "_*"
+  - ".nojekyll"
+
+plugins:
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: true
+
+markdown: kramdown
+
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+gems:
+  - jekyll-relative-links
