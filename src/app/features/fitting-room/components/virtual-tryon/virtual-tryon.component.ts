@@ -48,6 +48,19 @@ export class VirtualTryonComponent implements OnInit {
   
   // Controle de z-index para camadas
   private maxZIndex = 5;
+  
+  // Variáveis para eventos de toque
+  isTouching = false;
+  touchStartX = 0;
+  touchStartY = 0;
+  
+  // Variáveis para gestos de pinça (zoom com dois dedos)
+  isPinching = false;
+  initialPinchDistance = 0;
+  initialScale = 1;
+  
+  // Para prevenir scroll durante manipulação
+  private isManipulating = false;
 
   ngOnInit(): void {
     this.userImage = sessionStorage.getItem('userImage');
@@ -203,6 +216,104 @@ export class VirtualTryonComponent implements OnInit {
     
     this.isDragging = false;
     this.currentDragItem = null;
+    this.isManipulating = false;
+  }
+
+  // Eventos de toque para dispositivos móveis
+  onTouchStart(event: TouchEvent, clothingImage: string): void {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    this.isManipulating = true;
+    
+    if (event.touches.length === 1) {
+      // Um dedo - arrastar
+      this.selectItem(clothingImage);
+      this.isTouching = true;
+      this.currentDragItem = clothingImage;
+      this.touchStartX = event.touches[0].clientX;
+      this.touchStartY = event.touches[0].clientY;
+    } else if (event.touches.length === 2) {
+      // Dois dedos - zoom com pinça
+      this.isPinching = true;
+      this.currentItem = clothingImage;
+      this.selectItem(clothingImage);
+      
+      const touch1 = event.touches[0];
+      const touch2 = event.touches[1];
+      this.initialPinchDistance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) +
+        Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+      this.initialScale = this.currentScale;
+    }
+  }
+
+  onTouchMove(event: TouchEvent): void {
+    if (!this.isManipulating) return;
+    
+    event.preventDefault();
+    
+    if (event.touches.length === 1 && this.isTouching && this.currentDragItem) {
+      // Arrastar com um dedo
+      const deltaX = event.touches[0].clientX - this.touchStartX;
+      const deltaY = event.touches[0].clientY - this.touchStartY;
+      
+      const currentStyle = this.clothingStyles.get(this.currentDragItem);
+      if (currentStyle) {
+        const transformMatch = currentStyle.transform.match(/translate\(([^,]+),\s*([^)]+)\)/);
+        const currentX = transformMatch ? parseFloat(transformMatch[1]) : 0;
+        const currentY = transformMatch ? parseFloat(transformMatch[2]) : 0;
+        
+        const newX = currentX + deltaX;
+        const newY = currentY + deltaY;
+        
+        this.updateClothingTransform(this.currentDragItem, newX, newY, this.currentScale);
+      }
+      
+      this.touchStartX = event.touches[0].clientX;
+      this.touchStartY = event.touches[0].clientY;
+    } else if (event.touches.length === 2 && this.isPinching && this.currentItem) {
+      // Zoom com dois dedos
+      const touch1 = event.touches[0];
+      const touch2 = event.touches[1];
+      const currentDistance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) +
+        Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+      
+      if (this.initialPinchDistance > 0) {
+        const scaleChange = currentDistance / this.initialPinchDistance;
+        this.currentScale = Math.max(0.1, Math.min(3, this.initialScale * scaleChange));
+        this.updateCurrentItemTransform();
+      }
+    }
+  }
+
+  onTouchEnd(event: TouchEvent): void {
+    if (event.touches.length === 0) {
+      this.isTouching = false;
+      this.isPinching = false;
+      this.currentDragItem = null;
+      this.isManipulating = false;
+    } else if (event.touches.length === 1 && this.isPinching) {
+      // Se estava fazendo pinça e sobrou um dedo, mudar para arrastar
+      this.isPinching = false;
+      this.isTouching = true;
+      this.touchStartX = event.touches[0].clientX;
+      this.touchStartY = event.touches[0].clientY;
+    }
+  }
+
+  onContainerTouchStart(event: TouchEvent): void {
+    if (!this.isManipulating) {
+      // Só desseleciona se não está manipulando uma roupa
+      const target = event.target as HTMLElement;
+      if (target.classList.contains('image-container') || 
+          target.classList.contains('user-image')) {
+        this.deselectAll();
+      }
+    }
   }
 
   // Funções para zoom
