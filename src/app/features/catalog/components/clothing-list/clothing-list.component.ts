@@ -26,10 +26,10 @@ export class ClothingListComponent {
     { id: 'camiseta-azul', name: 'Camiseta Azul', image: 'images/clothing/camiseta-azul.png', category: 'camisetas', selected: false, price: 49.90 },
     { id: 'calca-jeans', name: 'Calça Jeans', image: 'images/clothing/calca-jeans-masculina.png', category: 'calças', selected: false, price: 129.90 },
     { id: 'vestido-vermelho', name: 'Vestido Vermelho', image: 'images/clothing/vestido.png', category: 'vestidos', selected: false, price: 189.90 },
-    { id: 'saia-elegante', name: 'Saia Elegante', image: 'https://via.placeholder.com/300x400/e83e8c/ffffff?text=Saia+Elegante', category: 'saias', selected: false, price: 79.90 },
-    { id: 'chapeu-unissex', name: 'Chapéu Unissex', image: 'https://via.placeholder.com/300x400/8B4513/ffffff?text=Chapéu+Unissex', category: 'acessórios', selected: false, price: 39.90 },
-    { id: 'shorts-feminino', name: 'Shorts Feminino', image: 'https://via.placeholder.com/300x400/FF6B6B/ffffff?text=Shorts+Feminino', category: 'shorts', selected: false, price: 59.90 },
-    { id: 'camiseta-feminina', name: 'Camiseta Feminina', image: 'https://via.placeholder.com/300x400/FFB6C1/000000?text=Camiseta+Feminina', category: 'camisetas', selected: false, price: 54.90 }
+    { id: 'saia-elegante', name: 'Saia Elegante', image: 'images/clothing/saia.png', category: 'saias', selected: false, price: 79.90 },
+    { id: 'chapeu-unissex', name: 'Chapéu Unissex', image: 'images/clothing/chapeu.png', category: 'acessórios', selected: false, price: 39.90 },
+    { id: 'shorts-feminino', name: 'Shorts Feminino', image: 'images/clothing/shorts-feminina.png', category: 'shorts', selected: false, price: 59.90 },
+    { id: 'camiseta-feminina', name: 'Camiseta Feminina', image: 'images/clothing/camiseta-feminina.png', category: 'camisetas', selected: false, price: 54.90 }
   ];
 
   selectedClothes: ClothingItem[] = [];
